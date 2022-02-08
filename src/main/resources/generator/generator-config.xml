@@ -40,7 +40,9 @@
                              targetPackage="com.wang.wiki1.mapper"
                              type="XMLMAPPER"/>
 
-        <table tableName="demo" domainObjectName="Demo"/>
+<!--        <table tableName="demo" domainObjectName="Demo"/>-->
+                <table tableName="ebook" domainObjectName="Ebook"/>
+
     </context>
 </generatorConfiguration>
 
