@@ -12,7 +12,7 @@ import java.util.List;
  * @create 2022-02-08 14:55
  */
 @Service
-public class TestServer {
+public class TestService {
     @Resource
     private TestMapper testMapper;
     public List<Test> list(){

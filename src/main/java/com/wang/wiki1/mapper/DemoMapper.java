@@ -2,8 +2,9 @@ package com.wang.wiki1.mapper;
 
 import com.wang.wiki1.domain.Demo;
 import com.wang.wiki1.domain.DemoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface DemoMapper {
     long countByExample(DemoExample example);
@@ -27,4 +28,6 @@ public interface DemoMapper {
     int updateByPrimaryKeySelective(Demo record);
 
     int updateByPrimaryKey(Demo record);
+
+
 }
