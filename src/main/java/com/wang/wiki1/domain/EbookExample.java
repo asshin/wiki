@@ -676,7 +676,7 @@ public class EbookExample {
     }
 
     public static class Criteria extends GeneratedCriteria {
-        protected Criteria() {
+        public Criteria() {
             super();
         }
     }
