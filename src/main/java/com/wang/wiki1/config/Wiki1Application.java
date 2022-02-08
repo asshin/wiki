@@ -1,5 +1,6 @@
 package com.wang.wiki1.config;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
@@ -10,6 +11,7 @@ import org.springframework.core.env.Environment;
 
 @ComponentScan("com.wang")
 @SpringBootApplication
+@MapperScan("com.wang.wiki1.mapper")
 public class Wiki1Application {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Wiki1Application.class);

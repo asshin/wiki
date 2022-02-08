@@ -11,3 +11,23 @@ create table `ebook` (
                          `vote_count` int not null default 0 comment '点赞数',
                          primary key (`id`)
 ) engine=innodb default charset=utf8mb4 comment='电子书';
+
+drop table if exists `test`;
+create table `test`(
+    `id` bigint not null comment 'id',
+    `name` varchar(50) comment 'name',
+    primary key (`id`)
+                   ) engine=innodb default charset=utf8mb4 comment='test';
+
+insert into `test`(id, name) VALUES (1,'zsw');
+insert into `test`(id, name) VALUES (2,'zsj');
+
+drop table if exists `demo`;
+create table `demo`(
+                       `id` bigint not null comment 'id',
+                       `name` varchar(50) comment 'name',
+                       primary key (`id`)
+) engine=innodb default charset=utf8mb4 comment='test';
+
+insert into `demo`(id, name) VALUES (1,'zsw1');
+insert into `demo`(id, name) VALUES (2,'zsj2');
