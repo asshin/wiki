@@ -98,8 +98,8 @@ export default defineComponent({
     console.log("setup")
     const books= ref();
    onMounted(()=>{
-   console.log("setup");
-    Axios.get("http://localhost:8082/ebook/resp").then((response)=>{
+   console.log("setup2");
+    Axios.get("/ebook/resp").then((response)=>{
                books.value=response.data.content;
                 console.log(response);
               })
