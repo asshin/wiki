@@ -99,7 +99,7 @@ export default defineComponent({
     const books= ref();
    onMounted(()=>{
    console.log("setup");
-    Axios.get("http://localhost:8082/ebook/resp?name=spring").then((response)=>{
+    Axios.get("http://localhost:8082/ebook/resp").then((response)=>{
                books.value=response.data.content;
                 console.log(response);
               })
