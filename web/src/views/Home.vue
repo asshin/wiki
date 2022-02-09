@@ -95,13 +95,10 @@ export default defineComponent({
     HelloWorld,
   },
   setup() {
-    console.log("setup")
     const books= ref();
    onMounted(()=>{
-   console.log("setup2");
     Axios.get("/ebook/resp").then((response)=>{
                books.value=response.data.content;
-                console.log(response);
               })
 
   });
