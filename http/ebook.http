@@ -1,4 +1,4 @@
-GET http://localhost:8082/ebook/resp?name=spring
+GET http://localhost:8082/ebook/resp?start=2&size=2
 Accept: application/json
 
 ###

@@ -1,15 +1,13 @@
 package com.wang.wiki1.controller;
 
-import com.wang.wiki1.domain.Ebook;
+import com.wang.wiki1.req.EbookReq;
 import com.wang.wiki1.resp.CommonResp;
 import com.wang.wiki1.resp.EbookQueryResp;
+import com.wang.wiki1.resp.PageResp;
 import com.wang.wiki1.service.EbookService;
-import com.wang.wiki1.util.CopyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author zsw
@@ -27,12 +25,10 @@ public class ebookController {
         return  "hello2,"+ebookServer.list();
     }
     @RequestMapping("/resp")
-    public CommonResp resp(Ebook ebook){
-        CommonResp<List<EbookQueryResp>> listCommonResp = new CommonResp<>();
-        List<Ebook> ebooks = ebookServer.list2(ebook);
-        List<EbookQueryResp> ebookQueryResps = CopyUtil.copyList(ebooks, EbookQueryResp.class);
-        listCommonResp.setContent(ebookQueryResps);
-        listCommonResp.setMessage("yes");
+    public CommonResp resp(EbookReq ebookReq){
+        CommonResp<PageResp<EbookQueryResp>> listCommonResp = new CommonResp<>();
+        PageResp<EbookQueryResp> ebooks = ebookServer.list2(ebookReq);
+        listCommonResp.setContent(ebooks);
         return  listCommonResp;
     }
 }
