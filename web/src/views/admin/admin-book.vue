@@ -81,7 +81,7 @@
       const ebooks = ref();
       const pagination = ref({
         current: 1,
-        pageSize: 1001,
+        pageSize:5,
         total: 0
       });
       const loading = ref(false);
@@ -166,15 +166,18 @@
       const handleModalOk = () => {
         modalLoading.value = true;
         axios.post("/ebook/save",ebook.value).then((response) => {
+          modalLoading.value = false;
           const data = response.data;
           if(data.success){
-            modalLoading.value = false;
             modalVisible.value=false;
+            handleQuery({
+              page: pagination.value.current,
+              size: pagination.value.pageSize,
+            });
+          }else {
+            message.error(data.message)
           }
-          handleQuery({
-            page: pagination.value.current,
-            size: pagination.value.pageSize,
-          });
+
         });
 
       };
