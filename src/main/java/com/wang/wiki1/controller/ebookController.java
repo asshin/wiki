@@ -1,11 +1,13 @@
 package com.wang.wiki1.controller;
 
 import com.wang.wiki1.req.EbookReq;
+import com.wang.wiki1.req.EbookSaveReq;
 import com.wang.wiki1.resp.CommonResp;
 import com.wang.wiki1.resp.EbookQueryResp;
 import com.wang.wiki1.resp.PageResp;
 import com.wang.wiki1.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,5 +32,12 @@ public class ebookController {
         PageResp<EbookQueryResp> ebooks = ebookServer.list2(ebookReq);
         listCommonResp.setContent(ebooks);
         return  listCommonResp;
+    }
+    @RequestMapping("/save")
+    public CommonResp save(@RequestBody  EbookSaveReq ebookSaveReq){
+        CommonResp listCommonResp = new CommonResp<>();
+        ebookServer.save(ebookSaveReq);
+        return  listCommonResp;
+
     }
 }

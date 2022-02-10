@@ -7,6 +7,7 @@ import com.wang.wiki1.domain.Ebook;
 import com.wang.wiki1.domain.EbookExample;
 import com.wang.wiki1.mapper.EbookMapper;
 import com.wang.wiki1.req.EbookReq;
+import com.wang.wiki1.req.EbookSaveReq;
 import com.wang.wiki1.resp.EbookQueryResp;
 import com.wang.wiki1.resp.PageResp;
 import com.wang.wiki1.util.CopyUtil;
@@ -47,5 +48,15 @@ public class EbookService {
         resp.setList(ebooks1);
         resp.setTotal(pageinfo.getTotal());
         return resp;
+    }
+
+    public void save( EbookSaveReq ebookSaveReq){
+        Ebook ebook=CopyUtil.copy(ebookSaveReq,Ebook.class);
+        if(ObjectUtils.isEmpty(ebookSaveReq.getId())){
+
+        }else{
+            ebookMapper.updateByPrimaryKey(ebook);
+        }
+
     }
 }
