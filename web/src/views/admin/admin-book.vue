@@ -4,13 +4,25 @@
     <a-layout-content
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
+      <p>
+        <a-form layout="inline" :model="param">
+          <a-form-item>
+            <a-input v-model:value="param.name" placeholder="名称">
+            </a-input>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
+              查询
+            </a-button>
+          </a-form-item>
+          <a-form-item>
+            <a-button type="primary" @click="add()">
+              新增
+            </a-button>
+          </a-form-item>
+        </a-form>
+      </p>
 
-
-
-
-      <a-button type="primary" @click="add()" size="large">
-        新增
-      </a-button>
           <a-table
                   :columns="columns"
                   :row-key="record => record.id"
@@ -78,6 +90,8 @@
   export default defineComponent({
     name: 'AdminEbook',
     setup() {
+      const param=ref();
+      param.value={};
       const ebooks = ref();
       const pagination = ref({
         current: 1,
@@ -133,6 +147,7 @@
                   {
             page:params.page,
             size:params.size,
+            name:param.value.name
         }
         } ).then((response) => {
           loading.value = false;
@@ -223,12 +238,14 @@
       });
 
       return {
+        param ,
         ebook,
         ebooks,
         pagination,
         columns,
         loading,
         handleTableChange,
+        handleQuery,
 
         edit,
         add,
