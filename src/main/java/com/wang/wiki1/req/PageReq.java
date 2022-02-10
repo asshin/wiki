@@ -1,28 +1,13 @@
 package com.wang.wiki1.req;
-
-/**
- * @author zsw
- * @create 2022-02-10 13:18
- */
+import javax.validation.constraints.Max;
+import javax.validation.constraints.NotNull;
 public class PageReq {
+    @NotNull(message = "【页码】不能为空")
     private int page;
+
+    @NotNull(message = "【每页条数】不能为空")
+    @Max(value = 1000, message = "【每页条数】不能超过1000")
     private int size;
-
-    @Override
-    public String toString() {
-        return "PageReq{" +
-                "page=" + page +
-                ", size=" + size +
-                '}';
-    }
-
-    public PageReq(int page, int size) {
-        this.page = page;
-        this.size = size;
-    }
-
-    public PageReq() {
-    }
 
     public int getPage() {
         return page;
@@ -38,5 +23,14 @@ public class PageReq {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("PageReq{");
+        sb.append("page=").append(page);
+        sb.append(", size=").append(size);
+        sb.append('}');
+        return sb.toString();
     }
 }

@@ -1,5 +1,4 @@
 package com.wang.wiki1.controller;
-
 import com.wang.wiki1.req.EbookReq;
 import com.wang.wiki1.req.EbookSaveReq;
 import com.wang.wiki1.resp.CommonResp;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 /**
  * @author zsw
  * @create 2022-02-08 16:33
@@ -28,7 +28,7 @@ public class ebookController {
         return  "hello2,"+ebookServer.list();
     }
     @RequestMapping("/resp")
-    public CommonResp resp(EbookReq ebookReq){
+    public CommonResp resp(@Valid EbookReq ebookReq){
         CommonResp<PageResp<EbookQueryResp>> listCommonResp = new CommonResp<>();
         PageResp<EbookQueryResp> ebooks = ebookServer.list2(ebookReq);
         listCommonResp.setContent(ebooks);
