@@ -5,31 +5,31 @@ package com.wang.wiki1.req;
  * @create 2022-02-10 13:18
  */
 public class PageReq {
-    private int start;
+    private int page;
     private int size;
 
     @Override
     public String toString() {
         return "PageReq{" +
-                "start=" + start +
+                "page=" + page +
                 ", size=" + size +
                 '}';
+    }
+
+    public PageReq(int page, int size) {
+        this.page = page;
+        this.size = size;
     }
 
     public PageReq() {
     }
 
-    public PageReq(int start, int size) {
-        this.start = start;
-        this.size = size;
+    public int getPage() {
+        return page;
     }
 
-    public int getStart() {
-        return start;
-    }
-
-    public void setStart(int start) {
-        this.start = start;
+    public void setPage(int page) {
+        this.page = page;
     }
 
     public int getSize() {

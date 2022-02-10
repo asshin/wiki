@@ -4,11 +4,13 @@
     <a-layout-content
             :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
     >
-      <a-layout>
 
-        <a-layout-content
-                :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }"
-        >
+
+
+
+      <a-button type="primary" @click="add()" size="large">
+        新增
+      </a-button>
           <a-table
                   :columns="columns"
                   :row-key="record => record.id"
@@ -25,14 +27,22 @@
                 <a-button type="primary" @click="edit(record)">
                   编辑
                 </a-button>
-                <a-button type="danger">
-                  删除
-                </a-button>
+                <a-popconfirm
+                        title="Are you sure delete this task?"
+                        ok-text="Yes"
+                        cancel-text="No"
+                        @confirm="deleteById(record.id)"
+                >
+                  <a-button type="danger">
+                    删除
+                  </a-button>
+                </a-popconfirm>
+
               </a-space>
             </template>
           </a-table>
-        </a-layout-content>
-      </a-layout>
+
+
 
     </a-layout-content>
   </a-layout>
@@ -121,7 +131,7 @@
         loading.value = true;
         axios.get("/ebook/resp",{params:
                   {
-            start:params.start,
+            page:params.page,
             size:params.size,
         }
         } ).then((response) => {
@@ -139,7 +149,7 @@
        * 表格点击页码时触发
        */
       const handleTableChange = (pagination: any) => {
-        console.log("看看自带的分页参数都有啥：" + pagination);
+        console.log("看看自带的分页参数都有啥：" + pagination.current);
         handleQuery({
           page: pagination.current,
           size: pagination.pageSize
@@ -158,7 +168,7 @@
             modalVisible.value=false;
           }
           handleQuery({
-            start: pagination.value.current,
+            page: pagination.value.current,
             size: pagination.value.pageSize,
           });
         });
@@ -169,14 +179,38 @@
        * 编辑
        */
       const edit = (record:any) => {
-        console.log("record is this:"+record)
+                console.log("record is this:"+record)
+                modalVisible.value = true;
+                ebook.value=record
+              };
+      /**
+       * 新增
+       */
+      const add = () => {
         modalVisible.value = true;
-        ebook.value=record
+        ebook.value={};
+      };
+      /**
+       * 删除通过id
+       */
+      const deleteById = (id:number) => {
+        axios.delete("/ebook/delete/"+id).then((response) => {
+          const data = response.data;
+          if(data.success){
+            handleQuery({
+              page: pagination.value.current-1,
+              size: pagination.value.pageSize,
+            });
+          }
+
+        });
+
+
       };
 
       onMounted(() => {
         handleQuery({
-          start: 1,
+          page: 1,
           size: pagination.value.pageSize,
         });
       });
@@ -188,7 +222,11 @@
         columns,
         loading,
         handleTableChange,
+
         edit,
+        add,
+        deleteById,
+
         modalVisible,
         modalLoading,
         handleModalOk

@@ -7,6 +7,7 @@ import com.wang.wiki1.resp.EbookQueryResp;
 import com.wang.wiki1.resp.PageResp;
 import com.wang.wiki1.service.EbookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,11 @@ public class ebookController {
         CommonResp listCommonResp = new CommonResp<>();
         ebookServer.save(ebookSaveReq);
         return  listCommonResp;
-
+    }
+    @RequestMapping("/delete/{id}")
+    public CommonResp delete(@PathVariable long id){
+        CommonResp listCommonResp = new CommonResp<>();
+        ebookServer.delete(id);
+        return  listCommonResp;
     }
 }

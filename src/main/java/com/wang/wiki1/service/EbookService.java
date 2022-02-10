@@ -11,6 +11,7 @@ import com.wang.wiki1.req.EbookSaveReq;
 import com.wang.wiki1.resp.EbookQueryResp;
 import com.wang.wiki1.resp.PageResp;
 import com.wang.wiki1.util.CopyUtil;
+import com.wang.wiki1.util.SnowFlake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.ObjectUtils;
@@ -39,7 +40,7 @@ public class EbookService {
         if(!ObjectUtils.isEmpty(ebookReq.getName())){
             criteria1.andNameLike("%"+ebookReq.getName()+"%");
         }
-        PageHelper.startPage(ebookReq.getStart(),ebookReq.getSize());
+        PageHelper.startPage(ebookReq.getPage(),ebookReq.getSize());
         List<Ebook> ebooks = ebookMapper.selectByExample(ebookExample);
 
         PageInfo<Ebook> pageinfo=new PageInfo<>(ebooks);
@@ -52,11 +53,16 @@ public class EbookService {
 
     public void save( EbookSaveReq ebookSaveReq){
         Ebook ebook=CopyUtil.copy(ebookSaveReq,Ebook.class);
-        if(ObjectUtils.isEmpty(ebookSaveReq.getId())){
-
+        if(ObjectUtils.isEmpty(ebook.getId())){
+            SnowFlake snowFlake = new SnowFlake();
+           ebook.setId(snowFlake.nextId());
+           ebookMapper.insert(ebook);
         }else{
             ebookMapper.updateByPrimaryKey(ebook);
         }
 
+    }
+    public void delete( long id){
+           ebookMapper.deleteByPrimaryKey(id);
     }
 }
