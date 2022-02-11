@@ -7,12 +7,8 @@
       <p>
         <a-form layout="inline" :model="param">
           <a-form-item>
-            <a-input v-model:value="param.name" placeholder="名称">
-            </a-input>
-          </a-form-item>
-          <a-form-item>
-            <a-button type="primary" @click="handleQuery({page: 1, size: pagination.pageSize})">
-              查询
+            <a-button type="primary" @click="handleQuery()">
+              刷新
             </a-button>
           </a-form-item>
           <a-form-item>
@@ -27,9 +23,10 @@
                   :columns="columns"
                   :row-key="record => record.id"
                   :data-source="categorys"
-                  :pagination="pagination"
+                  :pagination="false"
                   :loading="loading"
                   @change="handleTableChange"
+
           >
             <template #cover="{ text: cover }">
               <img v-if="cover" :src="cover" alt="avatar" />
@@ -127,22 +124,13 @@
       /**
        * 数据查询
        **/
-      const handleQuery = (params: any) => {
+      const handleQuery = () => {
         loading.value = true;
-        axios.get("/category/resp",{params:
-                  {
-            page:params.page,
-            size:params.size,
-            name:param.value.name
-        }
-        } ).then((response) => {
+        axios.get("/category/all").then((response) => {
           loading.value = false;
           const data = response.data;
           if (data.success) {
-             categorys.value = data.content.list;
-            // 重置分页按钮
-            pagination.value.current = params.page;
-            pagination.value.total=data.content.total;
+             categorys.value = data.content;
           }else {
             message.error(data.message);
           }
@@ -155,10 +143,7 @@
        */
       const handleTableChange = (pagination: any) => {
         console.log("看看自带的分页参数都有啥：" + pagination.current);
-        handleQuery({
-          page: pagination.current,
-          size: pagination.pageSize
-        });
+        handleQuery();
       };
       // -------- 表单 ---------
       const category = ref({});
@@ -171,10 +156,7 @@
           const data = response.data;
           if(data.success){
             modalVisible.value=false;
-            handleQuery({
-              page: pagination.value.current,
-              size: pagination.value.pageSize,
-            });
+            handleQuery();
           }else {
             message.error(data.message)
           }
@@ -205,10 +187,7 @@
         axios.delete("/category/delete/"+id).then((response) => {
           const data = response.data;
           if(data.success){
-            handleQuery({
-              page: pagination.value.current-1,
-              size: pagination.value.pageSize,
-            });
+            handleQuery();
           }
 
         });
@@ -217,10 +196,7 @@
       };
 
       onMounted(() => {
-        handleQuery({
-          page: 1,
-          size: pagination.value.pageSize,
-        });
+        handleQuery();
       });
 
       return {

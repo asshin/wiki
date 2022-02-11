@@ -41,7 +41,6 @@ public class CategoryService {
         resp.setList(categorys1);
         return resp;
     }
-
     public void save( CategorySaveReq categorySaveReq){
         Category category=CopyUtil.copy(categorySaveReq,Category.class);
         if(ObjectUtils.isEmpty(category.getId())){
@@ -52,6 +51,14 @@ public class CategoryService {
             categoryMapper.updateByPrimaryKey(category);
         }
 
+    }
+
+    public List<CategoryQueryResp> getAll(){
+        CategoryExample categoryExample = new CategoryExample();
+        categoryExample.setOrderByClause("sort asc");
+        List<Category> categorys = categoryMapper.selectByExample(categoryExample);
+        List<CategoryQueryResp> categorys1 = CopyUtil.copyList(categorys, CategoryQueryResp.class);
+        return categorys1;
     }
     public void delete( long id){
            categoryMapper.deleteByPrimaryKey(id);

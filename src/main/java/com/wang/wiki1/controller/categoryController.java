@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author zsw
@@ -34,6 +35,13 @@ public class categoryController {
         PageResp<CategoryQueryResp> categorys = categoryServer.list2(categoryReq);
         listCommonResp.setContent(categorys);
         return  listCommonResp;
+    }
+    @RequestMapping("/all")
+    public CommonResp all(){
+        CommonResp<List<CategoryQueryResp>> listCommonResp1 = new CommonResp<>();
+        List<CategoryQueryResp> categorys1 = categoryServer.getAll();
+        listCommonResp1.setContent(categorys1);
+        return  listCommonResp1;
     }
     @RequestMapping("/save")
     public CommonResp save(@Valid @RequestBody  CategorySaveReq categorySaveReq){
